@@ -1,7 +1,6 @@
 import { FilterProducts } from "@/mongodb/curd";
 import { NextApiRequest, NextApiResponse } from "next";
-const cors = require('cors')
-cors({origin: true, credentials: true})
+
 
 export default async(req: NextApiRequest, res: NextApiResponse) => {
   const {category, collection} = req.body
