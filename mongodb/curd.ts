@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import { GetCollection } from "./mongoConnect"
 
 //Variaveis de ambiente, está no ficheiro .env
@@ -29,3 +30,44 @@ export async function FilterProducts(category: string, collectionP: Array<string
 }
 
 /////////////////////////////// site /////////////////////
+//////////////////////////////BackOffice/////////////////
+
+//Adicionar novos produtos
+export async function AddNewProduct(products: any) {
+    const collection = await GetCollection(dbName, collectionName)
+    const result = await collection.insertMany(products)
+    return result
+}
+
+//Apagar produto
+export async function DeleteProduct(id: string) {
+    const collection = await GetCollection(dbName, collectionName)
+    const result = await collection.deleteOne({_id: new ObjectId(id)})
+    return result
+}
+
+interface modifyType{
+    _id: string
+    productName: string
+    productNameEng: string
+    category: string
+    collection: string
+    descriptionPt: string
+    descriptionEn: string
+    imgUrl: string
+    smallImg: Array<string>
+}
+
+//Modificar produto
+export async function ModifyProduct(modify: modifyType) {
+    const collection = await GetCollection(dbName, collectionName)
+    const result = await collection.replaceOne({_id: new ObjectId(modify._id)}, {productName: modify.productName,
+    productNameEng: modify.productNameEng,
+    category: modify.category,
+    collection: modify.collection,
+    descriptionPt: modify.descriptionPt,
+    descriptionEn: modify.descriptionEn,
+    imgUrl: modify.imgUrl,
+    smallImg: modify.smallImg })
+    return result
+}
