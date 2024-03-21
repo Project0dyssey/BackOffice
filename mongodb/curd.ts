@@ -71,3 +71,10 @@ export async function ModifyProduct(modify: modifyType) {
     smallImg: modify.smallImg })
     return result
 }
+
+//Info do User para login
+export async function GetUserInfo(email: string) {
+    const collection = await GetCollection(dbName, 'Users')
+    const result = await collection.findOne({email: email})
+    return result
+}
