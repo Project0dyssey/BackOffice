@@ -1,4 +1,4 @@
-import { FilterProducts } from "@/mongodb/curd";
+import { FilterProducts } from "@/mongodb/crud";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors"
 

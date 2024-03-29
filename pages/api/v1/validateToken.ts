@@ -7,12 +7,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const token = JSON.parse(req.headers.authorization?.split(' ')[1]!)
         try{
             const decoded = await promisify (jwt.verify)(token, process.env.JWT_SECRET)
-
-            if(new Date(decoded.exp * 1000) < new Date(Date.now())) return res.status(401).json({result: 'Token expired.'})
+  
+            if(new Date(decoded.exp * 1000) < new Date(Date.now()) || !decoded) return res.status(401).json({result: 'Token expired.'})
 
             return res.status(200).json({result: 'ola'})
         } catch(err){
-            return res.status(200).json({result: 'Error'})
+            return res.status(400).json({result: err})
         }
     }
 }
