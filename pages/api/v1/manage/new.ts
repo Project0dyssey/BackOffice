@@ -1,4 +1,4 @@
-import { AddNewProduct } from "@/mongodb/curd";
+import { AddNewProduct } from "@/mongodb/crud";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

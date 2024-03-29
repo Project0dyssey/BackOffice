@@ -53,9 +53,9 @@ interface modifyType{
     category: string
     collection: string
     descriptionPt: string
-    descriptionEn: string
+    descriptionEng: string
     imgUrl: string
-    smallImg: Array<string>
+    smallImgs: Array<string>
 }
 
 //Modificar produto
@@ -66,9 +66,16 @@ export async function ModifyProduct(modify: modifyType) {
     category: modify.category,
     collection: modify.collection,
     descriptionPt: modify.descriptionPt,
-    descriptionEn: modify.descriptionEn,
+    descriptionEng: modify.descriptionEng,
     imgUrl: modify.imgUrl,
-    smallImg: modify.smallImg })
+    smallImgs: modify.smallImgs })
+    return result
+}
+
+//Pegar producto por id
+export async function GetProductById(id: string) {
+    const collection = await GetCollection(dbName, collectionName)
+    const result = await collection.findOne({_id: new ObjectId(id)})
     return result
 }
 

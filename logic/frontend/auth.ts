@@ -29,6 +29,7 @@ export async function GetToken(){
         method: 'GET',
         headers: {'Authorization': `jwt ${token}`}
     }
+
     const res = await fetch('/api/v1/validateToken', options)
     if(res.status === 200){
         return true

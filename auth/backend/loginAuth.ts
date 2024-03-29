@@ -1,4 +1,4 @@
-import { GetUserInfo } from "@/mongodb/curd"
+import { GetUserInfo } from "@/mongodb/crud"
 import { ObjectId } from "mongodb"
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
