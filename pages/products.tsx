@@ -38,7 +38,9 @@ export default function Products() {
             </div>
             <div className="w-[100%] flex flex-col items-center p-5">
                 {product.map((el: any) =>
-                    <ProductCard productInfo={el} />
+                    <div className="w-[100%] flex justify-center">
+                        <ProductCard productInfo={el} />
+                    </div>
                 )}
             </div>
         </div>
