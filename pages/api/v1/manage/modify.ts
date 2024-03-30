@@ -1,0 +1,14 @@
+import { ModifyProduct } from "@/mongodb/crud";
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    if(req.method === 'POST'){
+        try{
+            const modifed = await ModifyProduct(req.body)
+            res.status(200).json({result: modifed})
+        } catch(err){
+            res.status(400).json({result: 'Something went wrong'})
+        }
+    }
+        res.status(400).json({result: 'Bad Request'})
+}
