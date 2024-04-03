@@ -10,7 +10,7 @@ export function TextArea4Edit({ productInfo, handleChange, label, property }: Te
         <div className="text-center w-[100%]">
             <p className="text-white">{label}</p>
             <textarea
-                className="w-[100%] text-sm"
+                className="w-[100%] h-[7rem] text-sm"
                 value={productInfo[property]}
                 onChange={(event) => handleChange(event.target.value, property)}
             />

@@ -5,7 +5,7 @@ export function Layout({ children }: any) {
         <div className="flex">
             <Navbar />
             <main
-                className="w-dvw h-dvh bg-[url('/images/background.png')] bg-cover">
+                className="w-dvw h-dvh bg-[url('/images/background.png')] bg-cover overflow-scroll">
                 {children}
             </main>
         </div>
