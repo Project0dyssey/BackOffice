@@ -1,4 +1,5 @@
 import { Input4edit } from "@/components/singleComponents/EditInput"
+import { Label4Photos } from "@/components/singleComponents/Label4PhotoInputs"
 import { TextArea4Edit } from "@/components/singleComponents/TextAreaInput"
 import { SubmitButton } from "@/components/singleComponents/submitButton"
 import { GetToken } from "@/logic/frontend/auth"
@@ -39,6 +40,14 @@ export default function Modify() {
         setProductInfo((prev: any) => ({ ...prev, [property]: event }))
     }
 
+    function handleChangeImage(event: any) {
+        setProductInfo((prev: any) => ({ ...prev, imgUrl: URL.createObjectURL(event) }))
+    }
+
+    function handleChangeSmallImages(event: any, i: number) {
+        setProductInfo((prev: any) => ({ ...prev, smallImgs: prev.smallImgs.map((el: string, idx: number) => i === idx ? URL.createObjectURL(event) : el) }))
+    }
+
     return (<>
         {typeof productInfo === 'string' ?
             <h1>Ocorreu um erro, tenta de novo</h1> :
@@ -76,11 +85,19 @@ export default function Modify() {
                             label="Coleção:"
                         />
                     </div>
-                    <div className="flex flex-col items-center">
-                        <img className="h-32" src={productInfo?.imgUrl} />
+                    <div className="flex flex-col items-center gap-5">
+                        <div className="flex flex-col items-center gap-2">
+                            <img className="h-32" src={productInfo?.imgUrl} />
+                            <Label4Photos inputId="principal_photo" description="Trocar foto principal" />
+                            <input className="hidden" id="principal_photo" type="file" onChange={(event) => handleChangeImage(event.target.files?.[0])} />
+                        </div>
                         <div className="flex justify-center">
                             {productInfo?.smallImgs.map((el: string, i: number) =>
-                                <img key={i} className="h-28" src={el} />
+                                <div className="flex flex-col w-52 items-center gap-2">
+                                    <img key={i} className="h-36" src={el} />
+                                    <Label4Photos inputId={`foto_${i}`} description={`Trocar Foto ${i + 1}`} />
+                                    <input className="hidden" id={`foto_${i}`} type="file" onChange={(event) => handleChangeSmallImages(event.target.files?.[0], i)} />
+                                </div>
                             )}
                         </div>
                     </div>
@@ -98,11 +115,13 @@ export default function Modify() {
                             label="Descrição em Eng:"
                         />
                     </div>
-                    <SubmitButton
-                        page="modify"
-                        buttonDescription="Submeter"
-                        productInfo={productInfo}
-                    />
+                    <div className="p-4">
+                        <SubmitButton
+                            page="modify"
+                            buttonDescription="Submeter"
+                            productInfo={productInfo}
+                        />
+                    </div>
                 </div>
             </div>}
 
