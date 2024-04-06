@@ -7,9 +7,10 @@ interface buttonTypes {
     page: string
     userInfo?: any
     productInfo?: any
+    savedPhotos?: any
 }
 
-export function SubmitButton({ buttonDescription, page, userInfo, productInfo }: buttonTypes) {
+export function SubmitButton({ buttonDescription, page, userInfo, productInfo, savedPhotos }: buttonTypes) {
     const router = useRouter()
 
     async function submit(page: string) {
@@ -18,7 +19,7 @@ export function SubmitButton({ buttonDescription, page, userInfo, productInfo }:
             if (!userLogIn) return 'Metermos um popup login não autorizado'
             router.push('./products')
         } else if (page === 'modify') {
-            const modifyProduct = await ModifyProduct(productInfo)
+            const modifyProduct = await ModifyProduct(productInfo, savedPhotos)
             if (modifyProduct) return 'Notificação'
         }
     }

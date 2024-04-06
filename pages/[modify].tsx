@@ -3,7 +3,7 @@ import { Label4Photos } from "@/components/singleComponents/Label4PhotoInputs"
 import { TextArea4Edit } from "@/components/singleComponents/TextAreaInput"
 import { SubmitButton } from "@/components/singleComponents/submitButton"
 import { GetToken } from "@/logic/frontend/auth"
-import { GetProduct, ModifyProduct } from "@/logic/frontend/fetchs"
+import { GetProduct } from "@/logic/frontend/fetchs"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
@@ -20,6 +20,7 @@ interface productObj {
 }
 export default function Modify() {
     const [productInfo, setProductInfo] = useState<productObj>()
+    const [savePhotos, setSavePhotos] = useState({ photoPrincial: '', otherPhotos: [1, 2, 3, 4] })
     const router = useRouter()
 
     useEffect(() => {
@@ -41,13 +42,14 @@ export default function Modify() {
     }
 
     function handleChangeImage(event: any) {
-        setProductInfo((prev: any) => ({ ...prev, imgUrl: URL.createObjectURL(event) }))
+        setSavePhotos((prev: any) => ({ ...prev, photoPrincipal: event }))
+        setProductInfo((prev: any) => ({ ...prev, imgUrl: event ? URL.createObjectURL(event) : prev.imgUrl }))
     }
 
     function handleChangeSmallImages(event: any, i: number) {
-        setProductInfo((prev: any) => ({ ...prev, smallImgs: prev.smallImgs.map((el: string, idx: number) => i === idx ? URL.createObjectURL(event) : el) }))
+        setSavePhotos((prev:any) => ({...prev, otherPhotos: prev.otherPhotos.map((el: any, idx:number) => i === idx ? event : el)}))
+        setProductInfo((prev: any) => ({ ...prev, smallImgs: prev.smallImgs.map((el: string, idx: number) => (i === idx && event) ? URL.createObjectURL(event) : el) }))
     }
-
     return (<>
         {typeof productInfo === 'string' ?
             <h1>Ocorreu um erro, tenta de novo</h1> :
@@ -119,6 +121,7 @@ export default function Modify() {
                         <SubmitButton
                             page="modify"
                             buttonDescription="Submeter"
+                            savedPhotos={savePhotos}
                             productInfo={productInfo}
                         />
                     </div>

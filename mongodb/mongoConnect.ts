@@ -4,7 +4,8 @@ dotenv.config()
 
 const DBname: string = process.env.DBNAME!
 const collecName: string = process.env.DBCOLLECTION!
-const url: string = process.env.NODE_ENV === 'development' ? 'mongodb://127.0.0.1:27017/' : process.env.DB_URL!
+// const url: string = process.env.NODE_ENV === 'development' ? 'mongodb://127.0.0.1:27017/' : process.env.DB_URL!
+const url: string = process.env.DB_URL!
 let client: MongoClient
 
 async function GetMongoClient() {
