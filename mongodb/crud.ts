@@ -61,14 +61,17 @@ interface modifyType{
 //Modificar produto
 export async function ModifyProduct(modify: modifyType) {
     const collection = await GetCollection(dbName, collectionName)
-    const result = await collection.replaceOne({_id: new ObjectId(modify._id)}, {productName: modify.productName,
-    productNameEng: modify.productNameEng,
-    category: modify.category,
-    collection: modify.collection,
-    descriptionPt: modify.descriptionPt,
-    descriptionEng: modify.descriptionEng,
-    imgUrl: modify.imgUrl,
-    smallImgs: modify.smallImgs })
+    const result = await collection.replaceOne({_id: new ObjectId(modify._id)}, 
+    {
+        productName: modify.productName,
+        productNameEng: modify.productNameEng,
+        category: modify.category,
+        collection: modify.collection,
+        descriptionPt: modify.descriptionPt,
+        descriptionEng: modify.descriptionEng,
+        imgUrl: modify.imgUrl,
+        smallImgs: modify.smallImgs 
+    })
     return result
 }
 

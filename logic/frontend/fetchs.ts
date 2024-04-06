@@ -34,15 +34,38 @@ export async function GetProduct(id: string) {
     return 'Error'
 }
 
-export async function ModifyProduct(product: any){
-    const options = {
+export async function ModifyProduct(product: any, savedPhotos: any){
+    if(savedPhotos.photoPrincipal){
+        try{
+            const formData = new FormData()
+            formData.append('file', savedPhotos.photoPrincipal)
+            formData.append('upload_preset', 'irwceypd')
+
+            const options1Photo = {
+                method: 'POST',
+                body: formData
+            }
+
+            const uploadCloud1Photo = await fetch(`https://api.cloudinary.com/v1_1/cloudorganicmean/image/upload`, options1Photo)
+            if(uploadCloud1Photo.status === 200){
+                const body = await uploadCloud1Photo.json()
+                product.imgUrl = body.url
+            }
+
+        } catch(err){
+            console.log(err);
+        }
+    }
+
+
+    const options4DB = {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(product)
     }
 
-    const res = await fetch('/api/v1/manage/modify', options)
-    if(res.status === 200){
+    const UpdateDatabase = await fetch('/api/v1/manage/modify', options4DB)
+    if(UpdateDatabase.status === 200){
         return true
     }
 
