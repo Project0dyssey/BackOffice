@@ -10,10 +10,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 return res.status(200).json({result: created})
             }
             const modifed = await ModifyProduct(req.body)
-            res.status(200).json({result: modifed})
+            return res.status(200).json({result: modifed})
         } catch(err){
-            res.status(400).json({result: 'Something went wrong'})
+           return res.status(400).json({result: 'Something went wrong'})
         }
     }
-        res.status(400).json({result: 'Bad Request'})
+       return res.status(400).json({result: 'Bad Request'})
 }

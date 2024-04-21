@@ -21,8 +21,23 @@ interface productInfoType {
 export function ProductCard({ productInfo }: productProps) {
     const [showDropDown, setShowDropDown] = useState<Boolean>(false)
     const router = useRouter()
+
     function toEditPage(productInfo: productInfoType) {
         return router.push(`/${productInfo._id}`)
+    }
+
+   async function deleteProduct(productId: string){
+        const options = {
+            method: 'DELETE',
+            headers: {'Content-Type':'application/json'},
+        }
+
+        const res = await fetch(`/api/v1/manage/delete?id=${productId}`, options)
+        if(res.status === 200) {
+             //'Enviar uma notificação de sucesso'
+        } else {
+            //'Enviar uma notificação de erro'
+        }
     }
 
     return (
@@ -45,7 +60,7 @@ export function ProductCard({ productInfo }: productProps) {
                 </div>
                 {showDropDown &&
                     <div className="bg-white text-sm flex justify-evenly text-[0.7rem]">
-                        <button>❌ eliminar</button>
+                        <button onClick={() => deleteProduct(productInfo._id)}>❌ eliminar</button>
                         <button onClick={() => toEditPage(productInfo)}>✏️ editar</button>
                     </div>
                 }

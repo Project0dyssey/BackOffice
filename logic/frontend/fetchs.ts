@@ -1,6 +1,3 @@
-import { lchown } from "fs"
-import { clearLine } from "readline"
-
 interface infoType{
     category: string
     collection: Array<string>
@@ -59,8 +56,6 @@ export async function ModifyProduct(product: any, savedPhotos: any, page: string
         } catch(err){
             console.log(err);
         }
-
-        
     }
 
     //Upload das outras fotos cloudinary
