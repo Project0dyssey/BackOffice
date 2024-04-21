@@ -32,7 +32,7 @@ export default function Products() {
         }
         getLoggedIn()
     }, [filter])
-    console.log(filter)
+    
     return (
         <div className="flex flex-col gap-5 h-dvh items-center overflow-scroll">
             <div className="flex mt-2 text-[1.3rem]">

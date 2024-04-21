@@ -8,10 +8,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             if(typeof id === 'string'){
                 const deleted = await DeleteProduct(id)
   
-            res.status(200).json({result: deleted})
+           return res.status(200).json({result: deleted})
             }
         } catch(err){
-            res.status(400).json({result: 'Bad Request'})
+           return res.status(400).json({result: 'Bad Request'})
         }
     }
     return res.status(400).json({result: 'Bad Request'})
