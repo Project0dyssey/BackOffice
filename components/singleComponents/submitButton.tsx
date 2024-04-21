@@ -18,8 +18,8 @@ export function SubmitButton({ buttonDescription, page, userInfo, productInfo, s
             const userLogIn = await login(userInfo)
             if (!userLogIn) return 'Metermos um popup login não autorizado'
             router.push('./products')
-        } else if (page === 'modify') {
-            const modifyProduct = await ModifyProduct(productInfo, savedPhotos)
+        } else if (page === 'modify' || 'addProduct') {
+            const modifyProduct = await ModifyProduct(productInfo, savedPhotos, page)
             if (modifyProduct) return 'Notificação'
         }
     }
