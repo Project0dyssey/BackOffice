@@ -18,9 +18,22 @@ interface productObj {
     category: string
     collection: string
 }
+
+const inicialProduct = {
+    _id: '',
+    productName: '',
+    productNameEng: '',
+    descriptionPt: '',
+    descriptionEng: '',
+    imgUrl: '',
+    smallImgs: ['1', '2', '3', '4'],
+    category: '',
+    collection: '',
+}
 export default function Modify() {
     const [productInfo, setProductInfo] = useState<productObj>()
-    const [savePhotos, setSavePhotos] = useState({ photoPrincial: '', otherPhotos: [1, 2, 3, 4] })
+    const [savePhotos, setSavePhotos] = useState({ photoPrincial: '', otherPhotos: [] })
+    const [page, setPage] = useState<string>()
     const router = useRouter()
 
     useEffect(() => {
@@ -29,9 +42,12 @@ export default function Modify() {
             if (!getToken) return router.push('/')
 
             const productId = router.query.modify ? router.query.modify : productInfo?._id
-            if (typeof productId === 'string') {
+            if (typeof productId === 'string' && productId !== 'addProduct') {
                 const product = await GetProduct(productId)
                 setProductInfo(product)
+            } else {
+                setProductInfo(inicialProduct)
+                setPage('addProduct')
             }
         }
         getLoggedIn()
@@ -47,7 +63,7 @@ export default function Modify() {
     }
 
     function handleChangeSmallImages(event: any, i: number) {
-        setSavePhotos((prev:any) => ({...prev, otherPhotos: prev.otherPhotos.map((el: any, idx:number) => i === idx ? event : el)}))
+        setSavePhotos((prev: any) => ({ ...prev, otherPhotos: [...prev.otherPhotos, event] }))
         setProductInfo((prev: any) => ({ ...prev, smallImgs: prev.smallImgs.map((el: string, idx: number) => (i === idx && event) ? URL.createObjectURL(event) : el) }))
     }
     return (<>
@@ -56,7 +72,29 @@ export default function Modify() {
             productInfo &&
             <div className="flex flex-col items-center">
                 <div className="flex gap-2 text-[1.5rem]">
-                    <p className="flex text-yellow-400">E<p className="text-white">ditar</p></p><p className="flex text-yellow-400">P<p className="text-white">eça</p></p>
+                    {page !== 'addProduct' ?
+                        <>
+                            <div className="flex">
+                                <p className="flex text-yellow-400">E</p>
+                                <p className="text-white">ditar</p>
+                            </div>
+                            <div className="flex">
+                                <p className="flex text-yellow-400">P</p>
+                                <p className="text-white">eça</p>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className="flex">
+                                <p className="flex text-yellow-400">A</p>
+                                <p className="text-white">dicionar</p>
+                            </div>
+                            <div className="flex">
+                                <p className="flex text-yellow-400">P</p>
+                                <p className="text-white">eça</p>
+                            </div>
+                        </>
+                    }
                 </div>
                 <div className="w-[100%] flex flex-col gap-4 items-center mt-8">
                     <div className="flex flex-col gap-2">
@@ -90,14 +128,14 @@ export default function Modify() {
                     <div className="flex flex-col items-center gap-5">
                         <div className="flex flex-col items-center gap-2">
                             <img className="h-32" src={productInfo?.imgUrl} />
-                            <Label4Photos inputId="principal_photo" description="Trocar foto principal" />
+                            <Label4Photos inputId="principal_photo" description={page !== 'addProduct' ? 'Trocar foto principal' : 'Adicinar Foto Principal'} />
                             <input className="hidden" id="principal_photo" type="file" onChange={(event) => handleChangeImage(event.target.files?.[0])} />
                         </div>
                         <div className="flex justify-center">
                             {productInfo?.smallImgs.map((el: string, i: number) =>
                                 <div className="flex flex-col w-52 items-center gap-2">
                                     <img key={i} className="h-36" src={el} />
-                                    <Label4Photos inputId={`foto_${i}`} description={`Trocar Foto ${i + 1}`} />
+                                    <Label4Photos inputId={`foto_${i}`} description={page !== 'addProduct' ? `Trocar Foto ${i + 1}` : `Adicionar Foto ${i + 1}`} />
                                     <input className="hidden" id={`foto_${i}`} type="file" onChange={(event) => handleChangeSmallImages(event.target.files?.[0], i)} />
                                 </div>
                             )}
@@ -119,7 +157,7 @@ export default function Modify() {
                     </div>
                     <div className="p-4">
                         <SubmitButton
-                            page="modify"
+                            page={page === 'addProduct' ? 'addProduct' : 'modify'}
                             buttonDescription="Submeter"
                             savedPhotos={savePhotos}
                             productInfo={productInfo}

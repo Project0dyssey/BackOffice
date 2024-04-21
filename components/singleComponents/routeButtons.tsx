@@ -11,6 +11,7 @@ export function RouteButton({ path, description }: buttonType) {
         if (description === 'Log out') localStorage.removeItem('token')
             return
     }
+    
     return (
         <>
             <button className="bg-gray-600" onClick={() => { router.push(path); clearLocalStorage() }}>{description}</button>

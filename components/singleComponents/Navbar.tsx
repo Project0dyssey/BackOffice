@@ -13,7 +13,7 @@ export function Navbar() {
                 </div>
                 <div className="flex flex-col gap-4">
                     <RouteButton path='./products' description='Produtos' />
-                    <RouteButton path='./create' description='Addicionar' />
+                    <RouteButton path='./addProduct' description='Addicionar' />
                 </div>
                 <div>
                     <RouteButton path="/" description="Log out" />

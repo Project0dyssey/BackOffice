@@ -34,8 +34,9 @@ export async function FilterProducts(category: string, collectionP: Array<string
 
 //Adicionar novos produtos
 export async function AddNewProduct(products: any) {
+    console.log(products)
     const collection = await GetCollection(dbName, collectionName)
-    const result = await collection.insertMany(products)
+    const result = await collection.insertOne(products)
     return result
 }
 
