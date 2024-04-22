@@ -16,8 +16,8 @@ export default function Home() {
         <Input type="password" description="password" userInfo={userInfo} setUserInfo={setUserInfo} />
         <div className="flex justify-center">
           <SubmitButton buttonDescription="Entrar" page="login" userInfo={userInfo} />
+        </div>
       </div>
-    </div>
     </div >
   );
 }
