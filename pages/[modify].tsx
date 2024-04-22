@@ -35,13 +35,13 @@ export default function Modify() {
     const [savePhotos, setSavePhotos] = useState({ photoPrincial: '', otherPhotos: [] })
     const [page, setPage] = useState<string>()
     const router = useRouter()
+    const productId = router.query.modify ? router.query.modify : productInfo?._id
 
     useEffect(() => {
         async function getLoggedIn() {
             const getToken = await GetToken()
             if (!getToken) return router.push('/')
 
-            const productId = router.query.modify ? router.query.modify : productInfo?._id
             if (typeof productId === 'string' && productId !== 'addProduct') {
                 const product = await GetProduct(productId)
                 setProductInfo(product)
@@ -51,9 +51,9 @@ export default function Modify() {
             }
         }
         getLoggedIn()
-    }, [])
+    }, [productId])
 
-    function handleChange(event: any, property: string) {
+    function handleChange(event: string, property: string) {
         setProductInfo((prev: any) => ({ ...prev, [property]: event }))
     }
 

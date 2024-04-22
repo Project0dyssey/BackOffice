@@ -12,7 +12,7 @@ interface stateType {
 
 export function Input({ type, description, userInfo, setUserInfo }: inputTypes) {
 
-    function handleChange(event: any, type: string) {
+    function handleChange(event: string, type: string) {
         setUserInfo((prev: stateType) => ({ ...prev, [type]: event }))
     }
     return (
@@ -22,7 +22,7 @@ export function Input({ type, description, userInfo, setUserInfo }: inputTypes) 
                 type={type}
                 placeholder={description}
                 onChange={(event) => handleChange(event.target.value, type)}
-                className="text-black w-[14rem] h-[2rem] rounded-lg text-center"
+                className="text-black w-[24rem] h-[3rem] rounded-lg text-center text-[1.1rem] border-[1px] border-black outline-none"
             />
         </>
     )

@@ -1,4 +1,6 @@
-import { useRouter } from "next/navigation"
+import { ToastElement } from "@/logic/frontend/notifications"
+import { notifyToast } from "@/logic/frontend/notify"
+import { useRouter } from "next/router"
 import { useState } from "react"
 
 interface productProps {
@@ -34,9 +36,10 @@ export function ProductCard({ productInfo }: productProps) {
 
         const res = await fetch(`/api/v1/manage/delete?id=${productId}`, options)
         if(res.status === 200) {
-             //'Enviar uma notificação de sucesso'
+             notifyToast('Peça eliminada com sucesso!', true)
+             setTimeout(() => router.reload(), 2000)
         } else {
-            //'Enviar uma notificação de erro'
+            notifyToast('Ocorreu um erro.', false)
         }
     }
 
@@ -64,6 +67,7 @@ export function ProductCard({ productInfo }: productProps) {
                         <button onClick={() => toEditPage(productInfo)}>✏️ editar</button>
                     </div>
                 }
+                <ToastElement/>
             </div>
         </>
     )
