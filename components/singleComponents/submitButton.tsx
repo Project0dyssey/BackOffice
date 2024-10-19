@@ -3,6 +3,7 @@ import { ModifyProduct } from "@/logic/frontend/fetchs"
 import { ToastElement } from "@/logic/frontend/notifications"
 import { notifyToast } from "@/logic/frontend/notify"
 import { useRouter } from "next/router"
+import { useState } from "react"
 
 interface buttonTypes {
     buttonDescription: string
@@ -14,6 +15,7 @@ interface buttonTypes {
 
 export function SubmitButton({ buttonDescription, page, userInfo, productInfo, savedPhotos }: buttonTypes) {
     const router = useRouter()
+    const [isActive, setIsActive] = useState(false);
 
     async function submit(page: string) {
         if (page === 'login') {
@@ -38,9 +40,15 @@ export function SubmitButton({ buttonDescription, page, userInfo, productInfo, s
     return (
         <>
             <button
-                className="bg-yellow-950 w-20 border-black border-[1px] rounded-md text-white"
-                onClick={() => submit(page)}
-            >{buttonDescription}</button>
+        className={`relative inline-flex items-center justify-center w-20 opacity-90
+          ${isActive ? 'text-stone-950 border-[1px]' : 'text-black border-black'}
+          bg-yellow-950 border-1 rounded-md duration-500 pause`}
+        onMouseDown={() => setIsActive(true)} 
+        onMouseUp={() => setIsActive(false)}
+        onClick={() => submit(page)}
+      >
+        {buttonDescription}
+      </button>
             <ToastElement />
         </>
     )
