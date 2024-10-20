@@ -41,8 +41,8 @@ export function SubmitButton({ buttonDescription, page, userInfo, productInfo, s
         <>
             <button
         className={`relative inline-flex items-center justify-center w-20 opacity-90
-          ${isActive ? 'text-stone-950 border-[1px]' : 'text-black border-black'}
-          bg-yellow-950 border-1 rounded-md duration-500 pause`}
+          ${isActive ? 'text-stone-100 border-[1px]' : 'text-stone-500 border-black'}
+          bg-yellow-950 border-1 rounded-md duration-500 hover:bg-stone-950 `}
         onMouseDown={() => setIsActive(true)} 
         onMouseUp={() => setIsActive(false)}
         onClick={() => submit(page)}
