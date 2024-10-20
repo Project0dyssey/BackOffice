@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 interface inputTypes {
     type: string
     description: string,
@@ -11,6 +13,8 @@ interface stateType {
 }
 
 export function Input({ type, description, userInfo, setUserInfo }: inputTypes) {
+    
+    const [isFocused, setIsFocused] = useState(false); 
 
     function handleChange(event: string, type: string) {
         setUserInfo((prev: stateType) => ({ ...prev, [type]: event }))
@@ -22,7 +26,10 @@ export function Input({ type, description, userInfo, setUserInfo }: inputTypes) 
                 type={type}
                 placeholder={description}
                 onChange={(event) => handleChange(event.target.value, type)}
-                className="text-black w-[24rem] h-[3rem] rounded-lg text-center text-[1.1rem] border-[1px] border-black outline-none"
+                onFocus={() => setIsFocused(true)} 
+                onBlur={() => setIsFocused(false)}
+                className={`text-white w-[20rem] h-[2rem] rounded-lg text-center text-[0.9rem] border-[1px] 
+                ${isFocused ? 'border-stone-600 bg-stone-900' : 'border-black bg-stone-800'} outline-none bg-opacity-150`}
             />
         </>
     )
