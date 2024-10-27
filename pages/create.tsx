@@ -13,7 +13,7 @@ export default function Add(){
     }, [])
     return(
         <>
-            Addicionar peça
+            Adicionar peça
         </>
     )
 }

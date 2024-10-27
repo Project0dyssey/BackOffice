@@ -5,7 +5,6 @@ import { GetToken } from "@/logic/frontend/auth";
 import { products } from "@/logic/frontend/fetchs";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { DataTable, TProduct } from "./yabadabadu";
 import { ColumnDef } from "@tanstack/react-table";
 
 interface filterType {
@@ -13,12 +12,23 @@ interface filterType {
   collection: Array<string>;
 }
 
-interface product {
-  name: string;
-  nameEng: string;
+interface productType {
+  productName?: string;
+  productNameEng?: string;
+  collection: string;
+  category: string;
+  _id: string;
+  descriptionPt: string;
+  descriptionEng: string;
+  imgUrl?: string;
+  smallImgs?: Array<string>;
 }
 
 const columns: ColumnDef<any>[] = [
+  {
+    accessorKey: "_id",
+    header: "ID",
+  },
   {
     accessorKey: "productNameEng",
     header: "Name",
@@ -38,9 +48,7 @@ export default function Products() {
     category: "All",
     collection: [],
   });
-  const [product, setProduct] = useState<Array<product>>([
-    { name: "", nameEng: "" },
-  ]);
+  const [product, setProduct] = useState<productType[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -54,26 +62,50 @@ export default function Products() {
     getLoggedIn();
   }, [filter]);
 
-  console.log(product);
-
   return (
-    <div className="flex flex-col gap-5 h-dvh items-center overflow-scroll">
-      <div className="flex mt-2 text-[1.3rem]">
-        <p className="text-yellow-500">P</p>
-        <p className="text-white">rodutos</p>
+    <div className="flex flex-col gap-6 items-center w-4/5 mx-auto rounded-md bg-stone-800 p-6">
+      <div className="flex items-center justify-center text-2xl font-bold text-yellow-500 tracking-wide">
+        <p>P</p>
+        <p className="text-stone-200">rodutos</p>
       </div>
       <SearchInputs setFilter={setFilter} />
-      <div className="w-[100%] flex flex-col items-center p-5">
-        {product.map((el: any, i: number) => (
-          <div key={i} className="w-[100%] flex justify-center">
-            <ProductCard productInfo={el} />
-          </div>
-        ))}
-      </div>
 
-      <div className="w-4/5 bg-zinc-950 rounded-md text-white">
-        <DataTable columns={columns} data={product} />
-      </div>
+      {product.length > 0 ? (
+        <div className="w-full bg-stone-900 rounded-lg shadow-lg p-4">
+          <table className="w-full text-left border-separate border-spacing-y-2">
+            <thead>
+              <tr className="text-stone-300 text-sm border-b border-stone-700">
+              <th className="p-2">ID</th>
+                <th className="p-2">Nome</th>
+                <th className="p-2">Coleção</th>
+                <th className="p-2">Categoria</th>
+                <th className="p-2 text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {product.map((el: productType) => (
+                <ProductCard
+                  key={el._id}
+                  productInfo={{
+                    ...el,
+                    _id: el._id || "",
+                    productName: el.productName || "",
+                    productNameEng: el.productNameEng || "",
+                    descriptionPt: el.descriptionPt || "",
+                    descriptionEng: el.descriptionEng || "",
+                    imgUrl: el.imgUrl || "",
+                    smallImgs: el.smallImgs || [],
+                  }}
+                  
+
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="text-stone-300">A Carregar Produtos...</p>
+      )}
     </div>
   );
 }
