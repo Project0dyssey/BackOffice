@@ -66,38 +66,26 @@ export default function Modify() {
         setSavePhotos((prev: any) => ({ ...prev, otherPhotos: [...prev.otherPhotos, event] }))
         setProductInfo((prev: any) => ({ ...prev, smallImgs: prev.smallImgs.map((el: string, idx: number) => (i === idx && event) ? URL.createObjectURL(event) : el) }))
     }
-    return (<>
-        {typeof productInfo === 'string' ?
-            <h1>Ocorreu um erro, tenta de novo</h1> :
-            productInfo &&
-            <div className="flex flex-col items-center">
-                <div className="flex gap-2 text-[1.5rem]">
-                    {page !== 'addProduct' ?
+    return ( <>
+        {typeof productInfo === 'string' ? (
+            <h1 className="text-red-500 text-center mt-4">Ocorreu um erro, tenta de novo</h1>
+        ) : productInfo && (
+            <div className="flex flex-col items-center bg-stone-800 p-6 rounded-lg w-4/5 mx-auto mt-6 shadow-md">
+                <div className="flex gap-2 text-2xl font-semibold text-yellow-400 mb-4">
+                    {page !== 'addProduct' ? (
                         <>
-                            <div className="flex">
-                                <p className="flex text-yellow-400">E</p>
-                                <p className="text-white">ditar</p>
-                            </div>
-                            <div className="flex">
-                                <p className="flex text-yellow-400">P</p>
-                                <p className="text-white">eça</p>
-                            </div>
+                            <p className="text-yellow-400">Editar</p>
+                            <p className="text-stone-200">Peça</p>
                         </>
-                        :
+                    ) : (
                         <>
-                            <div className="flex">
-                                <p className="flex text-yellow-400">A</p>
-                                <p className="text-white">dicionar</p>
-                            </div>
-                            <div className="flex">
-                                <p className="flex text-yellow-400">P</p>
-                                <p className="text-white">eça</p>
-                            </div>
+                            <p className="text-yellow-400">Adicionar</p>
+                            <p className="text-stone-200">Peça</p>
                         </>
-                    }
+                    )}
                 </div>
-                <div className="w-[100%] flex flex-col gap-4 items-center mt-8">
-                    <div className="flex flex-col gap-2">
+                <div className="w-full flex flex-col gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input4edit
                             productInfo={productInfo}
                             handleChange={handleChange}
@@ -110,8 +98,6 @@ export default function Modify() {
                             property="productNameEng"
                             label="Nome em Eng:"
                         />
-                    </div>
-                    <div className="flex flex-col gap-2">
                         <Input4edit
                             productInfo={productInfo}
                             handleChange={handleChange}
@@ -125,23 +111,25 @@ export default function Modify() {
                             label="Coleção:"
                         />
                     </div>
-                    <div className="flex flex-col items-center gap-5">
+
+                    <div className="flex flex-col items-center gap-6 mt-4">
                         <div className="flex flex-col items-center gap-2">
-                            <img className="h-32" src={productInfo?.imgUrl} />
-                            <Label4Photos inputId="principal_photo" description={page !== 'addProduct' ? 'Trocar foto principal' : 'Adicinar Foto Principal'} />
+                            <img className="h-32 w-32 rounded-lg object-cover" src={productInfo?.imgUrl} />
+                            <Label4Photos inputId="principal_photo" description={page !== 'addProduct' ? 'Trocar foto principal' : 'Adicionar Foto Principal'} />
                             <input className="hidden" id="principal_photo" type="file" onChange={(event) => handleChangeImage(event.target.files?.[0])} />
                         </div>
-                        <div className="flex justify-center">
-                            {productInfo?.smallImgs.map((el: string, i: number) =>
-                                <div className="flex flex-col w-52 items-center gap-2">
-                                    <img key={i} className="h-36" src={el} />
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {productInfo?.smallImgs.map((el: string, i: number) => (
+                                <div key={i} className="flex flex-col items-center gap-2">
+                                    <img className="h-24 w-24 rounded-lg object-cover" src={el} />
                                     <Label4Photos inputId={`foto_${i}`} description={page !== 'addProduct' ? `Trocar Foto ${i + 1}` : `Adicionar Foto ${i + 1}`} />
                                     <input className="hidden" id={`foto_${i}`} type="file" onChange={(event) => handleChangeSmallImages(event.target.files?.[0], i)} />
                                 </div>
-                            )}
+                            ))}
                         </div>
                     </div>
-                    <div className="w-[90%]">
+
+                    <div className="w-full flex flex-col gap-4 mt-4">
                         <TextArea4Edit
                             productInfo={productInfo}
                             handleChange={handleChange}
@@ -155,7 +143,8 @@ export default function Modify() {
                             label="Descrição em Eng:"
                         />
                     </div>
-                    <div className="p-4">
+
+                    <div className="flex justify-center mt-6">
                         <SubmitButton
                             page={page === 'addProduct' ? 'addProduct' : 'modify'}
                             buttonDescription="Submeter"
@@ -164,7 +153,8 @@ export default function Modify() {
                         />
                     </div>
                 </div>
-            </div>}
-
-    </>)
+            </div>
+        )}
+    </>
+);
 }
