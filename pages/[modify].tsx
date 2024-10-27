@@ -70,7 +70,7 @@ export default function Modify() {
         {typeof productInfo === 'string' ? (
             <h1 className="text-red-500 text-center mt-4">Ocorreu um erro, tenta de novo</h1>
         ) : productInfo && (
-            <div className="flex flex-col items-center bg-stone-800 p-6 rounded-lg w-4/5 mx-auto mt-6 shadow-md">
+            <div className="flex flex-col gap-5 items-center bg-stone-800 p-6 rounded-lg w-4/5 mx-auto mt-6 shadow-md">
                 <div className="flex gap-2 text-2xl font-semibold text-yellow-400 mb-4">
                     {page !== 'addProduct' ? (
                         <>

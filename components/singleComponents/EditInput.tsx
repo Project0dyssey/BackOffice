@@ -18,8 +18,8 @@ interface productInfotype {
 
 export function Input4edit({ productInfo, handleChange, property, label }: Input4editProps) {
     return (
-        <div className="flex justify-between gap-2">
-            <p className="text-white">{label}</p>
+        <div className="flex justify-between  gap-2">
+            <p className="text-white items-center">{label}</p>
             <input type='text'
                 value={productInfo[property]}
                 onChange={(event) => handleChange(event.target.value, property)}

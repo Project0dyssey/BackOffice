@@ -22,7 +22,7 @@ interface productInfoType {
 }
 
 export function ProductCard({ productInfo }: productProps) {
-  const truncatedId = `${productInfo._id.slice(0, 4)}-${productInfo._id.slice(-4)}`;
+  const sliceId = productInfo._id.slice( -4);
 
   const router = useRouter();
 
@@ -47,7 +47,7 @@ export function ProductCard({ productInfo }: productProps) {
 
   return (
     <tr className="text-sm text-stone-300 hover:bg-stone-800 transition duration-200">
-      <td className="p-2 text-stone-200">{truncatedId}</td>
+      <td className="p-2 text-stone-200">{sliceId}</td>
       <td className="p-2">{productInfo.productName}</td>
       <td className="p-2">{productInfo.collection}</td>
       <td className="p-2">{productInfo.category}</td>
